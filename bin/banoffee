@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var nopt = require('nopt');
+var argv = process.argv.slice(2);
+
+var knownOpts = {
+  version: Boolean
+};
+
+var shorthands = {
+  v: [ '--version' ],
+  '?': [ '--help' ],
+  h: [ '--help' ]
+};
+
+var defaults = {
+  version: false,
+  help: false
+};
+
+var options = nopt(knownOpts, shorthands);
+
+if (options.version) {
+  console.log(require("../package.json").version);
+  process.exit(0);
+}
+
+Object.keys(defaults).forEach(function (k) {
+  if (!options.hasOwnProperty(k)) { options[k] = defaults[k]; }
+});
+
+if (options.help || !options.argv.remain.length) {
+  console.log([
+    '',
+    'Usage:',
+    '',
+    'banoffee [ options ] <config-file>',
+    '',
+    'Options:',
+    '',
+    '--version  Print the ' + require('../package.json').name + ' version.',
+    '--help     Print this help.',
+    '',
+    'For command specific help use "enoise <cmd> help".',
+    ''
+  ].join('\n'));
+  process.exit(0);
+}
+
+var confFile = options.argv.remain.shift();
+if (!confFile) {
+  throw new Error('Path to config file must be passed as argument!');
+}
+// Resolve path to config file.
+confFile = path.resolve(process.cwd(), confFile);
+var Banoffee = require('../');
+var banoffee = new Banoffee(confFile);
+banoffee.run();
+
