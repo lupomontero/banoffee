@@ -21,7 +21,7 @@ var defaults = {
   ]
 };
 
-function Runner(opt) {
+function Banoffee(opt) {
   if (typeof opt === 'string') {
     // If `opt` argument is a string we assume this is a path to a file with the
     // config options.
@@ -46,7 +46,7 @@ function Runner(opt) {
   mkdirp.sync(this.options.depsDir);
 }
 
-Runner.prototype.run = function () {
+Banoffee.prototype.run = function () {
   var runner = this;
   var opt = this.options;
 
@@ -73,7 +73,7 @@ Runner.prototype.run = function () {
   });
 };
 
-Runner.prototype.loadTests = function (cb) {
+Banoffee.prototype.loadTests = function (cb) {
   var runner = this;
   var opt = this.options;
   fs.readdir(opt.testDir, function (err, files) {
@@ -87,7 +87,7 @@ Runner.prototype.loadTests = function (cb) {
   });
 };
 
-Runner.prototype.startSelenium = function (cb) {
+Banoffee.prototype.startSelenium = function (cb) {
   if (this.options.sauce) {
     this.startSauceSelenium(cb);
   } else {
@@ -95,23 +95,25 @@ Runner.prototype.startSelenium = function (cb) {
   }
 };
 
-Runner.prototype.startLocalSelenium = function (cb) {
+Banoffee.prototype.startLocalSelenium = function (cb) {
   var selenium = this.selenium = new SeleniumServer(this.options);
   selenium.install(function (err) {
     selenium.start(cb);
   });
 };
 
-Runner.prototype.startSauceSelenium = function (cb) {
+Banoffee.prototype.startSauceSelenium = function (cb) {
   var selenium = this.selenium = new SauceServer(this.options);
   selenium.install(function (err) {
     selenium.start(cb);
   });
 };
 
-Runner.prototype.stopSelenium = function (cb) {
+Banoffee.prototype.stopSelenium = function (cb) {
   this.selenium.stop(cb);
 };
 
-module.exports = Runner;
+module.exports = function (opt) {
+  return new Banoffee(opt);
+};
 

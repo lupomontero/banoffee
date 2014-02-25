@@ -54,7 +54,6 @@ if (!confFile) {
 }
 // Resolve path to config file.
 confFile = path.resolve(process.cwd(), confFile);
-var Banoffee = require('../');
-var banoffee = new Banoffee(confFile);
+var banoffee = require('../')(confFile);
 banoffee.run();
 
