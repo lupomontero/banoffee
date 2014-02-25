@@ -1,6 +1,18 @@
 {
   "name": "banoffee",
+  "description": "E2E testing for your node.js web app, using Selenium, ChromeDriver, Mocha, SauceLabs, ...",
   "version": "0.0.0",
+  "bin": {
+    "banoffee": "./bin/banoffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/lupomontero/banoffee.git"
+  },
+  "scripts": {
+    "pretest": "grunt jshint",
+    "test": "grunt test --verbose"
+  },
   "dependencies": {
     "async": "~0.2.10",
     "lodash": "~2.4.1",
@@ -8,5 +20,10 @@
     "mkdirp": "~0.3.5",
     "mocha": "~1.17.1",
     "wd": "~0.2.10"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.2",
+    "grunt-contrib-jshint": "^0.8.0",
+    "grunt-contrib-nodeunit": "^0.3.2"
   }
 }
