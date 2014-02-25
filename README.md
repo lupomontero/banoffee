@@ -1,4 +1,9 @@
-# banoffee [![Build Status](https://secure.travis-ci.org/lupomontero/banoffee.png)](http://travis-ci.org/lupomontero/banoffee) [![Dependency Status](https://david-dm.org/lupomontero/banoffee.svg?theme=shields.io)](https://david-dm.org/lupomontero/banoffee)
+# banoffee
+
+[![NPM](https://nodei.co/npm/horseshoe.png?compact=true)](https://nodei.co/npm/horseshoe/)
+
+[![Build Status](https://secure.travis-ci.org/lupomontero/banoffee.png)](http://travis-ci.org/lupomontero/banoffee) [![Dependency Status](https://david-dm.org/lupomontero/banoffee.svg?theme=shields.io)](https://david-dm.org/lupomontero/banoffee)
+[![devDependency Status](https://david-dm.org/lupomontero/banoffee/dev-status.png)](https://david-dm.org/lupomontero/banoffee#info=devDependencies)
 
 `banoffee` is a test runner. It brings a few things together (WebDriver,
 Selenium server, ChromeDriver, SauceLabs Connect, Mocha, ...) so you can easily
