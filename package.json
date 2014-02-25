@@ -1,6 +1,8 @@
 {
   "name": "banoffee",
   "description": "E2E testing for your node.js web app, using Selenium, ChromeDriver, Mocha, SauceLabs, ...",
+  "keywords": [ "e2e", "selenium", "web driver", "wd", "saucelabs", "mocha" ],
+  "author": "Lupo Montero <lupomontero@gmail.com> (http://lupomontero.com)",
   "version": "0.0.0",
   "bin": {
     "banoffee": "./bin/banoffee"
@@ -9,9 +11,13 @@
     "type": "git",
     "url": "http://github.com/lupomontero/banoffee.git"
   },
+  "license": "MIT",
   "scripts": {
     "pretest": "grunt jshint",
     "test": "grunt test --verbose"
+  },
+  "engines": {
+    "node": "0.10.x"
   },
   "dependencies": {
     "async": "~0.2.10",
