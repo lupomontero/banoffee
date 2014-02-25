@@ -25,10 +25,10 @@ An example `banoffee.conf.js` file using SauceLabs Sauce Connect:
 module.exports = {
 
   remote: {
-    hostname: '127.0.0.1',
-    port: 4444,
-    user: '',
-    pwd: ''
+    hostname: 'ondemand.saucelabs.com',
+    port: 80,
+    user: '<YOUR-SAUCELABS-USERNAME>',
+    pwd: '<YOUR-SAUCELABS-PASSWORD>'
   },
 
   platforms: [
