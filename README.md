@@ -140,3 +140,7 @@ var runner = banoffee();
 runner.run();
 ```
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lupomontero/banoffee/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
