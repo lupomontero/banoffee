@@ -9,13 +9,25 @@
 Selenium server, ChromeDriver, SauceLabs Connect, Mocha, ...) so you can easily
 test your app on real browsers.
 
+`banoffee` heavily relies on:
+
+* [wd](https://github.com/admc/wd)
+* [Mocha](https://github.com/visionmedia/mocha)
+* [selenium-server-standalone](https://code.google.com/p/selenium/downloads/detail?name=selenium-server-standalone-2.39.0.jar)
+* [chromedriver](https://code.google.com/p/selenium/wiki/ChromeDriver)
+* [Sauce-Connect](https://saucelabs.com/docs/connect)
+
+* * *
+
 ## Installation
 
 ```sh
 npm install banoffee --save-dev
 ```
 
-### Writing your tests
+* * *
+
+## Writing your tests
 
 Lets say you put your tests in a `test/` directory inside your project. An
 example file `test/index.spec.js` could look something like this:
@@ -54,13 +66,15 @@ describe('homepage', function () {
 });
 ```
 
-### Running your tests
+* * *
+
+## Running your tests
 
 Before you start running your tests you will probably need a configuration file
 where you can tell `banoffee` where to find the files with your tests, what
 Selenium server to connect to, what browsers to test on and so on.
 
-#### Configuration
+### Configuration
 
 Following the example above, we could add a `banoffee.conf.js` file in your
 project's root. In this example we only specify the directory where `banoffee`
@@ -108,7 +122,7 @@ module.exports = {
 };
 ```
 
-#### Command line
+### Command line
 
 Ok, so now you have a test and a config file, so lets get cracking!
 
@@ -137,7 +151,7 @@ and
 ./node_modules/banoffee/bin/banoffee banoffee.continuous.js
 ```
 
-#### Node.js module
+### Node.js module
 
 ```javascript
 var banoffee = require('banoffee');
@@ -145,7 +159,10 @@ var runner = banoffee();
 runner.run();
 ```
 
+* * *
 
+## Notes
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lupomontero/banoffee/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+* [Chromedriver doesn’t run in tmux and here’s how to fix it](http://borkweb.com/story/chromedriver-doesnt-run-in-tmux)
+* [Running Karma and Chrome under tmux on OSX](http://savanne.be/804-running-karma-and-chrome-under-tmux-on-osx/)
 
