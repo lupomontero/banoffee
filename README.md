@@ -33,34 +33,18 @@ Lets say you put your tests in a `test/` directory inside your project. An
 example file `test/index.spec.js` could look something like this:
 
 ```javascript
-var assert = require('assert');
+/*global browser, ports */
 
 describe('homepage', function () {
 
-  var url = 'http://localhost:3000/';
-  var browser;
+  var url = 'http://localhost:'  + ports.www;
 
-  before(function (done) {
-    getBrowser(function (err, b) {
-      browser = b;
-      done();
-    });
+  beforeEach(function () {
+    return browser.get(url);
   });
 
-  beforeEach(function (done) {
-    browser.get(url, done);
-  });
-
-  after(function (done) {
-    browser.quit(done);
-  });
-
-  it('should retrieve the page title', function (done) {
-    browser.title(function (err, title) {
-      assert.ok(!err);
-      assert.equal(title, 'The page title!');
-      done();
-    });
+  it('should retrieve the page title', function () {
+    return browser.title().should.become('The page title!');
   });
 
 });
