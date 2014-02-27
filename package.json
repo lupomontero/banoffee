@@ -1,7 +1,14 @@
 {
   "name": "banoffee",
   "description": "E2E testing for your node.js web app, using Selenium, ChromeDriver, Mocha, SauceLabs, ...",
-  "keywords": [ "e2e", "selenium", "web driver", "wd", "saucelabs", "mocha" ],
+  "keywords": [
+    "e2e",
+    "selenium",
+    "web driver",
+    "wd",
+    "saucelabs",
+    "mocha"
+  ],
   "author": "Lupo Montero <lupomontero@gmail.com> (http://lupomontero.com)",
   "version": "0.0.1",
   "bin": {
@@ -24,8 +31,11 @@
     "lodash": "~2.4.1",
     "nopt": "~2.2.0",
     "mkdirp": "~0.3.5",
+    "wd": "~0.2.10",
     "mocha": "~1.17.1",
-    "wd": "~0.2.10"
+    "chai": "^1.9.0",
+    "mocha-as-promised": "^2.0.0",
+    "chai-as-promised": "^4.1.0"
   },
   "devDependencies": {
     "grunt": "^0.4.2",
