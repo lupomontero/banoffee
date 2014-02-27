@@ -33,11 +33,11 @@ Lets say you put your tests in a `test/` directory inside your project. An
 example file `test/index.spec.js` could look something like this:
 
 ```javascript
-/*global browser, ports */
+/*global browser */
 
 describe('homepage', function () {
 
-  var url = 'http://localhost:'  + ports.www;
+  var url = 'http://localhost:3000/';
 
   beforeEach(function () {
     return browser.get(url);
