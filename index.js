@@ -4,13 +4,17 @@ var cp = require('child_process');
 var async = require('async');
 var _ = require('lodash');
 var mkdirp = require('mkdirp');
+var readdirp = require('readdirp');
+var es = require('event-stream');
+
 var SeleniumServer = require('./lib/selenium');
 var SauceServer = require('./lib/sauce');
+
 
 var defaults = {
   testDir: '',
   logDir: 'log',
-  testSuffix: '.spec.js',
+  testSuffix: '*.spec.js',
   sauce: false,
   remote: {
     hostname: '127.0.0.1',
@@ -21,99 +25,72 @@ var defaults = {
   ]
 };
 
-function Banoffee(opt) {
-  if (typeof opt === 'string') {
-    // If `opt` argument is a string we assume this is a path to a file with the
-    // config options.
-    this.confFile = opt;
-    this.confPath = path.dirname(this.confFile);
-    this.options = _.extend({}, defaults, require(this.confFile));
-    this.options.testDir = path.resolve(this.confPath, this.options.testDir);
-    this.options.logDir = path.resolve(this.confPath, this.options.logDir);
-  } else {
-    this.options = _.extend({}, defaults, opt);
-  }
 
-  var remote = this.options.remote || {};
+module.exports = function (conf, cb) {
+  var opt = _.extend({}, defaults, conf);
+
+  var remote = opt.remote || {};
   if (/saucelabs\.com$/.test(remote.hostname)) {
-    this.options.sauce = true;
+    opt.sauce = true;
   }
 
-  // Deps dir is not optionsl!
-  this.options.depsDir = path.resolve(__dirname, 'deps');
+  // Deps dir is not optional!
+  opt.depsDir = path.resolve(__dirname, 'deps');
 
-  mkdirp.sync(this.options.logDir);
-  mkdirp.sync(this.options.depsDir);
-}
+  mkdirp.sync(opt.logDir);
+  mkdirp.sync(opt.depsDir);
 
-Banoffee.prototype.run = function () {
-  var runner = this;
-  var opt = this.options;
+  var tests, selenium, failures;
+
+  function loadTests(cb) {
+    readdirp({ root: opt.testDir, fileFilter: opt.testSuffix })
+      .on('warn', function (err) { console.warn(err); })
+      .on('error', cb)
+      .pipe(es.writeArray(function (err, files) {
+        if (err) { return cb(err); }
+        tests = _.pluck(files, 'fullPath');
+        cb();
+      }));
+  }
+
+  function startSelenium(cb) {
+    selenium = opt.sauce ? new SauceServer(opt) : new SeleniumServer(opt);
+    selenium.install(function (err) {
+      if (err) { return cb(err); }
+      selenium.start(cb);
+    });
+  }
+
+  function stopSelenium(cb) {
+    selenium.stop(cb);
+  }
+
+  // Run tests on each platform.
+  function runTests(cb) {
+    async.eachSeries(opt.platforms, function (platform, cb) {
+      var child = cp.fork(path.join(__dirname, 'lib', 'child'));
+      child.on('close', function (code, signal) {
+        failures = code;
+        cb();
+      });
+      child.send({
+        type: 'init',
+        remote: opt.remote,
+        platform: platform,
+        tests: tests
+      });
+    }, cb);
+  }
 
   async.series([
-    runner.loadTests.bind(runner),
-    runner.startSelenium.bind(runner),
-    function (cb) {
-      // Run tests on each platform.
-      async.eachSeries(opt.platforms, function (platform, cb) {
-        var child = cp.fork(path.join(__dirname, 'lib', 'child'));
-        child.on('close', function () { cb(); });
-        child.send({
-          type: 'init',
-          remote: opt.remote,
-          platform: platform,
-          tests: runner.tests
-        });
-      }, cb);
-    },
-    runner.stopSelenium.bind(runner)
+    loadTests,
+    startSelenium,
+    runTests,
+    stopSelenium
   ], function (err) {
-    if (err) { return console.error(err); }
-    console.log('Done running tests on all platforms!');
-  });
-};
-
-Banoffee.prototype.loadTests = function (cb) {
-  var runner = this;
-  var opt = this.options;
-  fs.readdir(opt.testDir, function (err, files) {
     if (err) { return cb(err); }
-    runner.tests = files.filter(function (file) {
-      return file.substr(-1 * opt.testSuffix.length) === opt.testSuffix;
-    }).map(function (file) {
-      return path.join(opt.testDir, file);
-    });
-    cb(null, runner.tests);
+    cb(null, failures);
   });
-};
 
-Banoffee.prototype.startSelenium = function (cb) {
-  if (this.options.sauce) {
-    this.startSauceSelenium(cb);
-  } else {
-    this.startLocalSelenium(cb);
-  }
-};
-
-Banoffee.prototype.startLocalSelenium = function (cb) {
-  var selenium = this.selenium = new SeleniumServer(this.options);
-  selenium.install(function (err) {
-    selenium.start(cb);
-  });
-};
-
-Banoffee.prototype.startSauceSelenium = function (cb) {
-  var selenium = this.selenium = new SauceServer(this.options);
-  selenium.install(function (err) {
-    selenium.start(cb);
-  });
-};
-
-Banoffee.prototype.stopSelenium = function (cb) {
-  this.selenium.stop(cb);
-};
-
-module.exports = function (opt) {
-  return new Banoffee(opt);
 };
 

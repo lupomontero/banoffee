@@ -12,7 +12,7 @@
   ],
   "author": "Lupo Montero <lupomontero@gmail.com> (http://lupomontero.com)",
   "bin": {
-    "banoffee": "./bin/banoffee"
+    "banoffee": "./bin/cli.js"
   },
   "repository": {
     "type": "git",
@@ -27,19 +27,20 @@
     "node": "0.10.x"
   },
   "dependencies": {
-    "async": "~0.2.10",
-    "lodash": "~2.4.1",
-    "nopt": "~2.2.0",
-    "mkdirp": "~0.3.5",
-    "wd": "~0.2.10",
-    "mocha": "~1.17.1",
+    "async": "^0.9.0",
     "chai": "^1.9.0",
-    "mocha-as-promised": "^2.0.0",
-    "chai-as-promised": "^4.1.0"
+    "chai-as-promised": "^4.1.0",
+    "event-stream": "^3.1.7",
+    "lodash": "^2.4.1",
+    "minimist": "^1.1.0",
+    "mkdirp": "^0.5.0",
+    "mocha": "^2.0.1",
+    "readdirp": "^1.1.0",
+    "wd": "^0.3.10"
   },
   "devDependencies": {
-    "grunt": "^0.4.2",
-    "grunt-contrib-jshint": "^0.8.0",
-    "grunt-contrib-nodeunit": "^0.3.2"
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.4.1"
   }
 }
