@@ -20,6 +20,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "postinstall": "./install.js",
     "pretest": "grunt jshint",
     "test": "grunt test --verbose"
   },
@@ -30,12 +31,17 @@
     "async": "^0.9.0",
     "chai": "^1.9.0",
     "chai-as-promised": "^4.1.0",
+    "checksum": "^0.1.1",
     "event-stream": "^3.1.7",
+    "executable": "^1.0.3",
     "lodash": "^2.4.1",
     "minimist": "^1.1.0",
     "mkdirp": "^0.5.0",
     "mocha": "^2.0.1",
+    "progress": "^1.1.8",
     "readdirp": "^1.1.0",
+    "rimraf": "^2.2.8",
+    "unzip": "^0.1.11",
     "wd": "^0.3.10"
   },
   "devDependencies": {

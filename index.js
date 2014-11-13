@@ -42,7 +42,7 @@ module.exports = function (options) {
   var files, server;
   var failures = 0;
 
-  opt.depsDir = path.resolve(__dirname, 'deps');
+  opt.vendorDir = path.resolve(__dirname, 'vendor');
   opt.testDir = path.resolve(process.cwd(), opt.testDir);
   opt.logDir = path.resolve(opt.testDir, 'log');
 
@@ -85,10 +85,7 @@ module.exports = function (options) {
   function startSelenium(cb) {
     var isSauce = /saucelabs\.com$/.test(opt.remote.hostname);
     server = isSauce ? new SauceServer(opt) : new SeleniumServer(opt);
-    server.install(function (err) {
-      if (err) { return cb(err); }
-      server.start(cb);
-    });
+    server.start(cb);
   }
 
   function stopSelenium(cb) {

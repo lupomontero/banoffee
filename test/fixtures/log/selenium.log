@@ -1,0 +1,222 @@
+Nov 13, 2014 6:57:24 PM org.openqa.grid.selenium.GridLauncher main
+INFO: Launching a standalone server
+18:57:24.816 INFO - Java: Oracle Corporation 24.65-b04
+18:57:24.821 INFO - OS: Mac OS X 10.10 x86_64
+18:57:24.843 INFO - v2.39.0, with Core v2.39.0. Built from revision ff23eac
+18:57:24.843 INFO - Selenium server running in debug mode.
+18:57:24.893 DEBUG - add component: SocketListener0@0.0.0.0:4444
+18:57:24.907 DEBUG - add component: org.openqa.jetty.http.ResourceCache@454e3bb0
+18:57:24.914 DEBUG - add component: org.openqa.selenium.server.ProxyHandler in HttpContext[/,/]
+18:57:24.923 DEBUG - add component: HttpContext[/,/]
+18:57:24.924 DEBUG - Added HttpContext[/,/] for host *
+18:57:24.924 DEBUG - add component: org.openqa.jetty.http.ResourceCache@431c4ef6
+18:57:24.926 DEBUG - added SC{BASIC,null,user,CONFIDENTIAL} at /org/openqa/selenium/tests/html/basicAuth/*
+18:57:24.936 DEBUG - add component: org.openqa.jetty.http.handler.SecurityHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:24.938 DEBUG - add component: org.openqa.selenium.server.StaticContentHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:24.948 DEBUG - add component: org.openqa.selenium.server.SessionExtensionJsHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:24.949 DEBUG - add component: org.openqa.selenium.server.htmlrunner.SingleTestSuiteResourceHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:24.949 DEBUG - add component: org.openqa.selenium.server.htmlrunner.SeleniumHTMLRunnerResultsHandler@752dc320
+18:57:24.950 DEBUG - add component: HttpContext[/selenium-server,/selenium-server]
+18:57:24.950 DEBUG - Added HttpContext[/selenium-server,/selenium-server] for host *
+18:57:25.020 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: MAC
+18:57:25.037 DEBUG - add component: org.openqa.jetty.http.ResourceCache@e7f4211
+18:57:25.065 DEBUG - add component: org.openqa.selenium.server.SeleniumDriverResourceHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:25.065 DEBUG - add component: HttpContext[/selenium-server/driver,/selenium-server/driver]
+18:57:25.066 DEBUG - Added HttpContext[/selenium-server/driver,/selenium-server/driver] for host *
+18:57:25.066 DEBUG - add component: org.openqa.jetty.http.ResourceCache@632f3276
+18:57:25.080 DEBUG - add component: WebDriver remote server
+18:57:25.090 DEBUG - add component: org.openqa.jetty.jetty.servlet.HashSessionManager@76959acc
+18:57:25.090 DEBUG - add component: org.openqa.jetty.jetty.servlet.ServletHandler@57e603e6
+18:57:25.090 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+18:57:25.091 DEBUG - add component: HttpContext[/wd,/wd]
+18:57:25.091 DEBUG - Added HttpContext[/wd,/wd] for host *
+18:57:25.091 DEBUG - Starting org.openqa.jetty.jetty.Server@242ced7a
+18:57:25.092 INFO - Version Jetty/5.1.x
+18:57:25.092 DEBUG - LISTENERS: [SocketListener0@0.0.0.0:4444]
+18:57:25.092 DEBUG - HANDLER: {null={/selenium-server/driver/*=[HttpContext[/selenium-server/driver,/selenium-server/driver]], /selenium-server/*=[HttpContext[/selenium-server,/selenium-server]], /=[HttpContext[/,/]], /wd/*=[HttpContext[/wd,/wd]]}}
+18:57:25.093 DEBUG - Starting HttpContext[/selenium-server/driver,/selenium-server/driver]
+18:57:25.101 DEBUG - Init classloader from null, sun.misc.Launcher$AppClassLoader@4ac5c32e for HttpContext[/selenium-server/driver,/selenium-server/driver]
+18:57:25.101 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
+18:57:25.101 DEBUG - Starting HttpContext[/selenium-server,/selenium-server]
+18:57:25.101 DEBUG - Init classloader from null, sun.misc.Launcher$AppClassLoader@4ac5c32e for HttpContext[/selenium-server,/selenium-server]
+18:57:25.102 DEBUG - Started org.openqa.jetty.http.handler.SecurityHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:25.102 DEBUG - Started org.openqa.selenium.server.StaticContentHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:25.102 DEBUG - Started org.openqa.selenium.server.SessionExtensionJsHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:25.102 DEBUG - Started org.openqa.selenium.server.htmlrunner.SingleTestSuiteResourceHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:25.102 DEBUG - Started org.openqa.selenium.server.SeleniumDriverResourceHandler in HttpContext[/selenium-server,/selenium-server]
+18:57:25.102 INFO - Started HttpContext[/selenium-server,/selenium-server]
+18:57:25.102 DEBUG - Starting HttpContext[/,/]
+18:57:25.103 DEBUG - Init classloader from null, sun.misc.Launcher$AppClassLoader@4ac5c32e for HttpContext[/,/]
+18:57:25.103 DEBUG - Started org.openqa.selenium.server.ProxyHandler in HttpContext[/,/]
+18:57:25.103 INFO - Started HttpContext[/,/]
+18:57:25.103 DEBUG - Starting HttpContext[/wd,/wd]
+18:57:25.103 DEBUG - Init classloader from null, sun.misc.Launcher$AppClassLoader@4ac5c32e for HttpContext[/wd,/wd]
+18:57:25.103 DEBUG - Starting org.openqa.jetty.jetty.servlet.ServletHandler@57e603e6
+18:57:25.103 DEBUG - New random session seed
+18:57:25.239 DEBUG - Session scavenger period = 30s
+18:57:25.254 DEBUG - Started holder of class org.openqa.selenium.remote.server.DriverServlet
+18:57:25.255 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@57e603e6
+18:57:25.256 INFO - Started HttpContext[/wd,/wd]
+18:57:25.302 INFO - Started SocketListener on 0.0.0.0:4444
+18:57:25.303 INFO - Started org.openqa.jetty.jetty.Server@242ced7a
+18:57:26.049 DEBUG - new HttpConnection: Socket[addr=/127.0.0.1,port=62066,localport=4444]
+18:57:26.081 DEBUG - REQUEST from SocketListener0@0.0.0.0:4444:
+POST /wd/hub/session HTTP/1.1
+Connection: keep-alive
+Accept: application/json
+Content-Type: application/json; charset=UTF-8
+Content-Length: 106
+Host: 127.0.0.1:4444
+
+
+18:57:26.083 DEBUG - Try HttpContext[/wd,/wd],0
+18:57:26.083 DEBUG - RestishHandler org.openqa.jetty.jetty.servlet.ServletHandler@57e603e6
+18:57:26.098 DEBUG - servlet=/hub/*=WebDriver remote server
+18:57:26.098 DEBUG - session=null
+18:57:26.319 INFO - Executing: [new session: Capabilities [{platform=ANY, javascriptEnabled=true, browserName=phantomjs, version=}]] at URL: /session)
+18:57:26.366 INFO - Creating a new session for Capabilities [{platform=ANY, javascriptEnabled=true, browserName=phantomjs, version=}]
+18:57:26.478 INFO - executable: /usr/local/bin/phantomjs
+18:57:26.478 INFO - port: 21013
+18:57:26.478 INFO - arguments: [--webdriver=21013, --webdriver-logfile=/Users/lupo/Documents/workspace/lupomontero/banoffee/vendor/selenium/phantomjsdriver.log]
+18:57:26.478 INFO - environment: {}
+18:57:27.002 DEBUG - Executing: newSession [null, newSession {desiredCapabilities=Capabilities [{platform=ANY, javascriptEnabled=true, browserName=phantomjs, version=}]}]
+18:57:27.048 DEBUG - Waiting for [http://localhost:21013/status]
+18:57:27.060 DEBUG - Polling http://localhost:21013/status
+18:57:27.622 DEBUG - Polling http://localhost:21013/status
+18:57:28.127 DEBUG - Polling http://localhost:21013/status
+18:57:28.632 DEBUG - Polling http://localhost:21013/status
+18:57:29.137 DEBUG - Polling http://localhost:21013/status
+18:57:29.638 DEBUG - Polling http://localhost:21013/status
+18:57:30.139 DEBUG - Polling http://localhost:21013/status
+PhantomJS is launching GhostDriver...
+[INFO  - 2014-11-13T23:57:30.494Z] GhostDriver - Main - running on port 21013
+18:57:30.643 DEBUG - Polling http://localhost:21013/status
+18:57:30.665 DEBUG - sun.net.www.MessageHeader@f949e4d5 pairs: {GET /status HTTP/1.1: null}{User-Agent: Java/1.7.0_67}{Host: localhost:21013}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+18:57:30.675 DEBUG - sun.net.www.MessageHeader@55cc93394 pairs: {null: HTTP/1.1 200 OK}{Cache: no-cache}{Content-Length: 131}{Content-Type: application/json;charset=UTF-8}
+18:57:30.752 DEBUG - Get connection: {}->http://localhost:21013, timeout = 120000
+18:57:30.753 DEBUG - [{}->http://localhost:21013] total kept alive: 0, total issued: 0, total allocated: 0 out of 2000
+18:57:30.753 DEBUG - No free connections [{}->http://localhost:21013][null]
+18:57:30.753 DEBUG - Available capacity: 2000 out of 2000 [{}->http://localhost:21013][null]
+18:57:30.754 DEBUG - Creating new connection [{}->http://localhost:21013]
+18:57:30.765 DEBUG - Connecting to localhost:21013
+18:57:30.785 DEBUG - CookieSpec selected: best-match
+18:57:30.808 DEBUG - Auth cache not set in the context
+18:57:30.808 DEBUG - Target auth state: UNCHALLENGED
+18:57:30.809 DEBUG - Proxy auth state: UNCHALLENGED
+18:57:30.809 DEBUG - Attempt 1 to execute request
+18:57:30.810 DEBUG - Sending request: POST /session HTTP/1.1
+18:57:30.810 DEBUG -  >> "POST /session HTTP/1.1[\r][\n]"
+18:57:30.811 DEBUG -  >> "Accept: application/json, image/png[\r][\n]"
+18:57:30.811 DEBUG -  >> "Content-Type: application/json; charset=utf-8[\r][\n]"
+18:57:30.811 DEBUG -  >> "Content-Length: 106[\r][\n]"
+18:57:30.812 DEBUG -  >> "Host: localhost:21013[\r][\n]"
+18:57:30.812 DEBUG -  >> "Connection: Keep-Alive[\r][\n]"
+18:57:30.812 DEBUG -  >> "[\r][\n]"
+18:57:30.812 DEBUG - >> POST /session HTTP/1.1
+18:57:30.812 DEBUG - >> Accept: application/json, image/png
+18:57:30.812 DEBUG - >> Content-Type: application/json; charset=utf-8
+18:57:30.813 DEBUG - >> Content-Length: 106
+18:57:30.813 DEBUG - >> Host: localhost:21013
+18:57:30.813 DEBUG - >> Connection: Keep-Alive
+18:57:30.813 DEBUG -  >> "{"desiredCapabilities":{"platform":"ANY","javascriptEnabled":true,"browserName":"phantomjs","version":""}}"
+[INFO  - 2014-11-13T23:57:30.822Z] Session [d43cbb10-6b90-11e4-96d7-978f199e7df1] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2014-11-13T23:57:30.822Z] Session [d43cbb10-6b90-11e4-96d7-978f199e7df1] - page.customHeaders:  - {}
+[INFO  - 2014-11-13T23:57:30.822Z] Session [d43cbb10-6b90-11e4-96d7-978f199e7df1] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-10.10 (Yosemite)-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2014-11-13T23:57:30.822Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: d43cbb10-6b90-11e4-96d7-978f199e7df1
+18:57:30.823 DEBUG -  << "HTTP/1.1 200 OK[\r][\n]"
+18:57:30.825 DEBUG -  << "Cache: no-cache[\r][\n]"
+18:57:30.826 DEBUG -  << "Content-Length: 543[\r][\n]"
+18:57:30.826 DEBUG -  << "Content-Type: application/json;charset=UTF-8[\r][\n]"
+18:57:30.826 DEBUG -  << "[\r][\n]"
+18:57:30.827 DEBUG - Receiving response: HTTP/1.1 200 OK
+18:57:30.828 DEBUG - << HTTP/1.1 200 OK
+18:57:30.828 DEBUG - << Cache: no-cache
+18:57:30.828 DEBUG - << Content-Length: 543
+18:57:30.828 DEBUG - << Content-Type: application/json;charset=UTF-8
+18:57:30.834 DEBUG - Connection can be kept alive indefinitely
+18:57:30.889 DEBUG -  << "{"sessionId":"d43cbb10-6b90-11e4-96d7-978f199e7df1","status":0,"value":{"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"mac-10.10 (Yosemite)-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}}"
+18:57:30.889 DEBUG - Released connection is reusable.
+18:57:30.889 DEBUG - Releasing connection [{}->http://localhost:21013][null]
+18:57:30.889 DEBUG - Pooling connection [{}->http://localhost:21013][null]; keep alive indefinitely
+18:57:30.890 DEBUG - Notifying no-one, there are no waiting threads
+18:57:30.893 DEBUG - Executed: [null, newSession {desiredCapabilities=Capabilities [{platform=ANY, javascriptEnabled=true, browserName=phantomjs, version=}]}]
+18:57:30.923 INFO - Done: /session
+18:57:30.939 DEBUG - Handled by org.openqa.jetty.jetty.servlet.ServletHandler@57e603e6
+18:57:30.939 DEBUG - RESPONSE:
+HTTP/1.1 200 OK
+Date: Thu, 13 Nov 2014 23:57:26 GMT
+Server: Jetty/5.1.x (Mac OS X/10.10 x86_64 java/1.7.0_67
+Expires: Thu, 01 Jan 1970 00:00:00 GMT
+Cache-Control: no-cache
+Content-Type: application/json;charset=UTF-8
+Content-Length: 666
+
+
+18:57:30.945 DEBUG - EOFException()
+18:57:30.963 DEBUG - new HttpConnection: Socket[addr=/127.0.0.1,port=62081,localport=4444]
+18:57:30.963 DEBUG - REQUEST from SocketListener0@0.0.0.0:4444:
+DELETE /wd/hub/session/0cee84f9-94bc-468e-8935-3e399da06e21 HTTP/1.1
+Connection: keep-alive
+Host: 127.0.0.1:4444
+Content-Length: 0
+
+
+18:57:30.963 DEBUG - Try HttpContext[/wd,/wd],0
+18:57:30.964 DEBUG - RestishHandler org.openqa.jetty.jetty.servlet.ServletHandler@57e603e6
+18:57:30.964 DEBUG - servlet=/hub/*=WebDriver remote server
+18:57:30.964 DEBUG - session=null
+18:57:30.965 INFO - Executing: [delete session: 0cee84f9-94bc-468e-8935-3e399da06e21] at URL: /session/0cee84f9-94bc-468e-8935-3e399da06e21)
+18:57:30.966 DEBUG - Executing: quit [d43cbb10-6b90-11e4-96d7-978f199e7df1, quit {}]
+18:57:30.967 DEBUG - Get connection: {}->http://localhost:21013, timeout = 120000
+18:57:30.967 DEBUG - [{}->http://localhost:21013] total kept alive: 1, total issued: 0, total allocated: 1 out of 2000
+18:57:30.967 DEBUG - Getting free connection [{}->http://localhost:21013][null]
+18:57:30.967 DEBUG - Stale connection check
+18:57:30.969 DEBUG - CookieSpec selected: best-match
+18:57:30.969 DEBUG - Auth cache not set in the context
+18:57:30.969 DEBUG - Target auth state: UNCHALLENGED
+18:57:30.969 DEBUG - Proxy auth state: UNCHALLENGED
+18:57:30.969 DEBUG - Attempt 1 to execute request
+18:57:30.970 DEBUG - Sending request: DELETE /session/d43cbb10-6b90-11e4-96d7-978f199e7df1 HTTP/1.1
+18:57:30.970 DEBUG -  >> "DELETE /session/d43cbb10-6b90-11e4-96d7-978f199e7df1 HTTP/1.1[\r][\n]"
+18:57:30.970 DEBUG -  >> "Accept: application/json, image/png[\r][\n]"
+18:57:30.970 DEBUG -  >> "Host: localhost:21013[\r][\n]"
+18:57:30.970 DEBUG -  >> "Connection: Keep-Alive[\r][\n]"
+18:57:30.970 DEBUG -  >> "[\r][\n]"
+18:57:30.970 DEBUG - >> DELETE /session/d43cbb10-6b90-11e4-96d7-978f199e7df1 HTTP/1.1
+18:57:30.971 DEBUG - >> Accept: application/json, image/png
+18:57:30.971 DEBUG - >> Host: localhost:21013
+18:57:30.971 DEBUG - >> Connection: Keep-Alive
+18:57:30.972 DEBUG -  << "HTTP/1.1 200 OK[\r][\n]"
+18:57:30.973 DEBUG -  << "Cache: no-cache[\r][\n]"
+18:57:30.973 DEBUG -  << "Content-Length: 74[\r][\n]"
+18:57:30.973 DEBUG -  << "Content-Type: application/json;charset=UTF-8[\r][\n]"
+18:57:30.973 DEBUG -  << "[\r][\n]"
+18:57:30.973 DEBUG - Receiving response: HTTP/1.1 200 OK
+18:57:30.973 DEBUG - << HTTP/1.1 200 OK
+18:57:30.973 DEBUG - << Cache: no-cache
+18:57:30.973 DEBUG - << Content-Length: 74
+18:57:30.974 DEBUG - << Content-Type: application/json;charset=UTF-8
+18:57:30.974 DEBUG - Connection can be kept alive indefinitely
+18:57:30.974 DEBUG -  << "{"sessionId":"d43cbb10-6b90-11e4-96d7-978f199e7df1","status":0,"value":{}}"
+18:57:30.974 DEBUG - Released connection is reusable.
+18:57:30.974 DEBUG - Releasing connection [{}->http://localhost:21013][null]
+18:57:30.975 DEBUG - Pooling connection [{}->http://localhost:21013][null]; keep alive indefinitely
+18:57:30.975 DEBUG - Notifying no-one, there are no waiting threads
+18:57:30.975 DEBUG - Waiting for http://localhost:21013/shutdown
+18:57:30.976 DEBUG - Polling http://localhost:21013/shutdown
+18:57:30.977 DEBUG - sun.net.www.MessageHeader@16c8b5a65 pairs: {GET /shutdown HTTP/1.1: null}{User-Agent: Java/1.7.0_67}{Host: localhost:21013}{Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2}{Connection: keep-alive}
+[INFO  - 2014-11-13T23:57:30.977Z] ShutdownReqHand - _handle - About to shutdown
+18:57:30.978 DEBUG - sun.net.www.MessageHeader@530db0f94 pairs: {null: HTTP/1.1 200 OK}{Cache: no-cache}{Content-Length: 36}{Content-Type: text/html;charset=UTF-8}
+18:57:31.482 DEBUG - Polling http://localhost:21013/shutdown
+18:57:31.537 DEBUG - Executed: [d43cbb10-6b90-11e4-96d7-978f199e7df1, quit {}]
+18:57:31.538 INFO - Done: /session/0cee84f9-94bc-468e-8935-3e399da06e21
+18:57:31.553 DEBUG - Handled by org.openqa.jetty.jetty.servlet.ServletHandler@57e603e6
+18:57:31.554 DEBUG - RESPONSE:
+HTTP/1.1 204 No Content
+Date: Thu, 13 Nov 2014 23:57:30 GMT
+Server: Jetty/5.1.x (Mac OS X/10.10 x86_64 java/1.7.0_67
+Expires: Thu, 01 Jan 1970 00:00:00 GMT
+Cache-Control: no-cache
+
+
+18:57:31.554 DEBUG - EOFException()

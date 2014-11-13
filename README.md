@@ -17,6 +17,13 @@ control the browser in your tests.
 
 * * *
 
+## Dependencies
+
+* `node`
+* `java`
+
+> Not tested on Windows at all :-(
+
 ## Installation
 
 ```sh
@@ -134,8 +141,6 @@ and
 ```sh
 $ banoffee --conf banoffee.continuous.js
 ```
-
-* * *
 
 ## Using `banoffee` programmatically
 
