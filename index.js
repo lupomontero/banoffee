@@ -20,7 +20,6 @@ var SauceServer = require('./lib/sauce');
 var defaults = {
   baseDir: '',
   testDir: 'test',
-  logDir: 'test/log',
   testFilePattern: '*.spec.js',
   remote: {
     hostname: '127.0.0.1',
@@ -41,11 +40,12 @@ module.exports = function (options) {
   var opt = _.extend({}, defaults, options);
 
   var ee = new EventEmitter();
-  var tests, server, failures;
+  var tests, server;
+  var failures = 0;
 
   opt.depsDir = path.resolve(__dirname, 'deps');
   opt.testDir = path.resolve(opt.baseDir, opt.testDir);
-  opt.logDir = path.resolve(opt.baseDir, opt.logDir);
+  opt.logDir = path.resolve(opt.testDir, 'log');
 
   function ensureDirs(cb) {
     async.eachSeries([
@@ -97,9 +97,6 @@ module.exports = function (options) {
   function startSelenium(cb) {
     var isSauce = /saucelabs\.com$/.test(opt.remote.hostname);
     server = isSauce ? new SauceServer(opt) : new SeleniumServer(opt);
-    server.on('log', function (str) {
-      ee.emit('log', str);
-    });
     server.install(function (err) {
       if (err) { return cb(err); }
       server.start(cb);
@@ -107,7 +104,10 @@ module.exports = function (options) {
   }
 
   function stopSelenium(cb) {
-    server.stop(cb);
+    server.stop(function (code, signal) {
+      //console.log(code, signal);
+      cb();
+    });
   }
 
   // Run tests on each platform.
@@ -116,7 +116,7 @@ module.exports = function (options) {
       ee.emit('log', 'Running tests on browser: ' + platform.browserName);
       var child = cp.fork(path.join(__dirname, 'lib', 'child'));
       child.on('close', function (code, signal) {
-        failures = code;
+        failures += code;
         cb();
       });
       child.send({

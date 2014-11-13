@@ -4,7 +4,7 @@ var banoffee = require('../');
 
 describe.only('banoffee', function () {
 
-  this.timeout(10 * 60 * 1000);
+  this.timeout(60 * 1000);
 
   it('should be a function', function (done) {
     assert.equal(typeof banoffee, 'function');
@@ -72,15 +72,16 @@ describe.only('banoffee', function () {
     });
   });
 
-  it.skip('should ...', function (done) {
+  it('should ...', function (done) {
     banoffee({
       baseDir: __dirname,
       testDir: 'fixtures',
-      testFilePattern: 'test-*.js'
+      testFilePattern: 'test-*.js',
+      platforms: [ { browserName: 'phantomjs' } ]
     }).on('log', function (str) {
       console.log('LOG:', str);
-    }).on('end', function () {
-      console.log('banoffee ended!');
+    }).on('end', function (failures) {
+      console.log('banoffee ended!', failures);
       done();
     });
   });
