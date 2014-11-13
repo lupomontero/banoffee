@@ -1,27 +1,26 @@
 //
 // Deps
 //
-
 var fs = require('fs');
 var path = require('path');
 var cp = require('child_process');
 var EventEmitter = require('events').EventEmitter;
-
 var async = require('async');
 var _ = require('lodash');
+var mkdirp = require('mkdirp');
 var readdirp = require('readdirp');
 var es = require('event-stream');
-
 var SeleniumServer = require('./lib/selenium');
 var SauceServer = require('./lib/sauce');
 
 
 //
-// Default options.
+// Default options
 //
 var defaults = {
   baseDir: '',
   testDir: 'test',
+  logDir: 'test/log',
   testFilePattern: '*.spec.js',
   remote: {
     hostname: '127.0.0.1',
@@ -42,10 +41,11 @@ module.exports = function (options) {
   var opt = _.extend({}, defaults, options);
 
   var ee = new EventEmitter();
-  var tests, selenium, failures;
+  var tests, server, failures;
 
   opt.depsDir = path.resolve(__dirname, 'deps');
   opt.testDir = path.resolve(opt.baseDir, opt.testDir);
+  opt.logDir = path.resolve(opt.baseDir, opt.logDir);
 
   function ensureDirs(cb) {
     async.eachSeries([
@@ -66,7 +66,10 @@ module.exports = function (options) {
           cb();
         });
       });
-    }, cb);
+    }, function (err) {
+      if (err) { return cb(err); }
+      mkdirp(opt.logDir, cb);
+    });
   }
 
   // Read test directory and load all test files.
@@ -93,18 +96,18 @@ module.exports = function (options) {
 
   function startSelenium(cb) {
     var isSauce = /saucelabs\.com$/.test(opt.remote.hostname);
-    selenium = isSauce ? new SauceServer(opt) : new SeleniumServer(opt);
-    selenium.on('log', function (str) {
-      //ee.emit('log', str);
+    server = isSauce ? new SauceServer(opt) : new SeleniumServer(opt);
+    server.on('log', function (str) {
+      ee.emit('log', str);
     });
-    selenium.install(function (err) {
+    server.install(function (err) {
       if (err) { return cb(err); }
-      selenium.start(cb);
+      server.start(cb);
     });
   }
 
   function stopSelenium(cb) {
-    selenium.stop(cb);
+    server.stop(cb);
   }
 
   // Run tests on each platform.
@@ -135,7 +138,6 @@ module.exports = function (options) {
     if (err) { 
       return ee.emit('error', err);
     }
-    console.log('ending...');
     ee.emit('end', failures);
   });
 

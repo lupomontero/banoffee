@@ -72,7 +72,7 @@ describe.only('banoffee', function () {
     });
   });
 
-  it.only('should ...', function (done) {
+  it.skip('should ...', function (done) {
     banoffee({
       baseDir: __dirname,
       testDir: 'fixtures',

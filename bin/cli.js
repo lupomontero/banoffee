@@ -39,7 +39,7 @@ banoffee(conf).on('error', function (err) {
   console.error(err);
   process.exit(1);
 }).on('log', function (str) {
-  // ...
+  console.log(str);
 }).on('end', function (failures) {
   if (failures) {
     console.warn('FAILED: ' + failures + ' test(s) failed');
