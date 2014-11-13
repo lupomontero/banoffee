@@ -9,7 +9,6 @@ var EventEmitter = require('events').EventEmitter;
 
 var async = require('async');
 var _ = require('lodash');
-var mkdirp = require('mkdirp');
 var readdirp = require('readdirp');
 var es = require('event-stream');
 
@@ -23,7 +22,6 @@ var SauceServer = require('./lib/sauce');
 var defaults = {
   baseDir: '',
   testDir: 'test',
-  logDir: 'test/log',
   testFilePattern: '*.spec.js',
   remote: {
     hostname: '127.0.0.1',
@@ -47,11 +45,7 @@ module.exports = function (options) {
   var tests, selenium, failures;
 
   opt.depsDir = path.resolve(__dirname, 'deps');
-  opt.logDir = path.resolve(opt.baseDir, opt.logDir);
   opt.testDir = path.resolve(opt.baseDir, opt.testDir);
-
-  //mkdirp.sync(opt.depsDir);
-  //mkdirp.sync(opt.logDir);
 
   function ensureDirs(cb) {
     async.eachSeries([
@@ -142,7 +136,7 @@ module.exports = function (options) {
       return ee.emit('error', err);
     }
     console.log('ending...');
-    ee.emit('end');
+    ee.emit('end', failures);
   });
 
   return ee;

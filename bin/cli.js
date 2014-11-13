@@ -30,15 +30,18 @@ if (argv.h || argv.help) {
 
 var confFile = argv.c || argv.conf || './banoffee.conf.js';
 var conf = require(path.resolve(process.cwd(), confFile));
+
 conf.baseDir = path.dirname(confFile);
 
 // Run banoffee with loaded configuration...
-banoffee(conf, function (err, failures) {
-  if (err) {
-    console.error('ERRORED: Error occurred while running tests');
-    console.error(err);
-    process.exit(1);
-  } else if (failures) {
+banoffee(conf).on('error', function (err) {
+  console.error('ERRORED: Error occurred while running tests');
+  console.error(err);
+  process.exit(1);
+}).on('log', function (str) {
+  // ...
+}).on('end', function (failures) {
+  if (failures) {
     console.warn('FAILED: ' + failures + ' test(s) failed');
     process.exit(2);
   } else {
