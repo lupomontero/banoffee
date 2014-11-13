@@ -1,6 +1,12 @@
+//
+// Deps
+//
+
 var fs = require('fs');
 var path = require('path');
 var cp = require('child_process');
+var EventEmitter = require('events').EventEmitter;
+
 var async = require('async');
 var _ = require('lodash');
 var mkdirp = require('mkdirp');
@@ -11,11 +17,14 @@ var SeleniumServer = require('./lib/selenium');
 var SauceServer = require('./lib/sauce');
 
 
+//
+// Default options.
+//
 var defaults = {
-  testDir: '',
-  logDir: 'log',
-  testSuffix: '*.spec.js',
-  sauce: false,
+  baseDir: '',
+  testDir: 'test',
+  logDir: 'test/log',
+  testFilePattern: '*.spec.js',
   remote: {
     hostname: '127.0.0.1',
     port: 4444
@@ -26,35 +35,74 @@ var defaults = {
 };
 
 
-module.exports = function (conf, cb) {
-  var opt = _.extend({}, defaults, conf);
+//
+// Public API
+//
+module.exports = function (options) {
 
-  var remote = opt.remote || {};
-  if (/saucelabs\.com$/.test(remote.hostname)) {
-    opt.sauce = true;
-  }
+  // Apply defaults to passed options.
+  var opt = _.extend({}, defaults, options);
 
-  // Deps dir is not optional!
-  opt.depsDir = path.resolve(__dirname, 'deps');
-
-  mkdirp.sync(opt.logDir);
-  mkdirp.sync(opt.depsDir);
-
+  var ee = new EventEmitter();
   var tests, selenium, failures;
 
+  opt.depsDir = path.resolve(__dirname, 'deps');
+  opt.logDir = path.resolve(opt.baseDir, opt.logDir);
+  opt.testDir = path.resolve(opt.baseDir, opt.testDir);
+
+  //mkdirp.sync(opt.depsDir);
+  //mkdirp.sync(opt.logDir);
+
+  function ensureDirs(cb) {
+    async.eachSeries([
+      { name: 'baseDir', src: opt.baseDir },
+      { name: 'testDir', src: opt.testDir }
+    ], function (dir, cb) {
+      fs.exists(dir.src, function (exists) {
+        if (!exists) {
+          return cb(new Error(dir.name + ' doesn\'t exist (' + dir.src + ').'));
+        }
+        fs.stat(dir.src, function (err, stats) {
+          if (err) {
+            return cb(err);
+          } else if (!stats.isDirectory()) {
+            return cb(new Error(dir.name + ' is not a directory (' + dir.src + ')'));
+          }
+          ee.emit('log', dir.name + ': ' + dir.src);
+          cb();
+        });
+      });
+    }, cb);
+  }
+
+  // Read test directory and load all test files.
   function loadTests(cb) {
-    readdirp({ root: opt.testDir, fileFilter: opt.testSuffix })
-      .on('warn', function (err) { console.warn(err); })
-      .on('error', cb)
+    if (!fs.existsSync(opt))
+    if (!fs.existsSync(opt.testDir)) {
+      return cb(new Error('Test directory doesn\'t exist'));
+    }
+    readdirp({ root: opt.testDir, fileFilter: opt.testFilePattern })
+      .on('warn', function (err) { ee.emit('warn', err); })
+      .on('error', function (err) {
+        cb(err);
+      })
       .pipe(es.writeArray(function (err, files) {
         if (err) { return cb(err); }
         tests = _.pluck(files, 'fullPath');
+        if (!tests.length) {
+          return cb(new Error('No test files loaded'));
+        }
+        ee.emit('log', 'Loaded tests: ' + tests.join(', '));
         cb();
       }));
   }
 
   function startSelenium(cb) {
-    selenium = opt.sauce ? new SauceServer(opt) : new SeleniumServer(opt);
+    var isSauce = /saucelabs\.com$/.test(opt.remote.hostname);
+    selenium = isSauce ? new SauceServer(opt) : new SeleniumServer(opt);
+    selenium.on('log', function (str) {
+      //ee.emit('log', str);
+    });
     selenium.install(function (err) {
       if (err) { return cb(err); }
       selenium.start(cb);
@@ -68,6 +116,7 @@ module.exports = function (conf, cb) {
   // Run tests on each platform.
   function runTests(cb) {
     async.eachSeries(opt.platforms, function (platform, cb) {
+      ee.emit('log', 'Running tests on browser: ' + platform.browserName);
       var child = cp.fork(path.join(__dirname, 'lib', 'child'));
       child.on('close', function (code, signal) {
         failures = code;
@@ -83,14 +132,20 @@ module.exports = function (conf, cb) {
   }
 
   async.series([
+    ensureDirs,
     loadTests,
     startSelenium,
     runTests,
     stopSelenium
   ], function (err) {
-    if (err) { return cb(err); }
-    cb(null, failures);
+    if (err) { 
+      return ee.emit('error', err);
+    }
+    console.log('ending...');
+    ee.emit('end');
   });
+
+  return ee;
 
 };
 

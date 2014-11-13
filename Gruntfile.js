@@ -3,7 +3,7 @@
 module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-shell');
 
   // Project configuration.
   grunt.initConfig({
@@ -20,14 +20,16 @@ module.exports = function (grunt) {
       ]
     },
 
-    nodeunit: {
-      files: [ 'test/*.spec.js' ]
+    shell: {
+      test: {
+        command: './node_modules/.bin/mocha test/*.spec.js'
+      }
     }
 
   });
 
   // Default task.
   grunt.registerTask('default', [ 'jshint', 'test' ]);
-  grunt.registerTask('test', [ 'nodeunit' ]);
+  grunt.registerTask('test', [ 'shell:test' ]);
 
 };

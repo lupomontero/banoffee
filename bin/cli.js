@@ -30,6 +30,7 @@ if (argv.h || argv.help) {
 
 var confFile = argv.c || argv.conf || './banoffee.conf.js';
 var conf = require(path.resolve(process.cwd(), confFile));
+conf.baseDir = path.dirname(confFile);
 
 // Run banoffee with loaded configuration...
 banoffee(conf, function (err, failures) {

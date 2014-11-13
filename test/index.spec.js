@@ -1,19 +1,88 @@
+var path = require('path');
+var assert = require('assert');
 var banoffee = require('../');
 
-exports['module is a function'] = function (t) {
-  t.equal(typeof banoffee, 'function');
-  t.done();
-};
+describe.only('banoffee', function () {
 
-exports['banoffee() returns an instance of Banoffee runner'] = function (t) {
-  var runner = banoffee({});
-  t.equal(runner.constructor.name, 'Banoffee');
-  t.done();
-};
+  this.timeout(10 * 60 * 1000);
 
-exports.foo = function (t) {
-  var runner = banoffee();
-  //console.log(runner.run());
-  t.done();
-};
+  it('should be a function', function (done) {
+    assert.equal(typeof banoffee, 'function');
+    done();
+  });
 
+  it('should throw when baseDir doesnt exist', function (done) {
+    banoffee({ baseDir: '/foo-bar-baz' }).on('error', function (err) {
+      assert.ok(err instanceof Error);
+      assert.ok(/baseDir doesn't exist/i.test(err.message));
+      done();
+    });
+  });
+
+  it('should throw when baseDir is not a directory', function (done) {
+    banoffee({ baseDir: __filename }).on('error', function (err) {
+      assert.ok(err instanceof Error);
+      assert.ok(/baseDir is not a directory/i.test(err.message));
+      done();
+    });
+  });
+
+  it('should throw when testDir doesnt exist', function (done) {
+    banoffee({
+      baseDir: __dirname,
+      testDir: 'fooo',
+    }).on('error', function (err) {
+      assert.ok(err instanceof Error);
+      assert.ok(/testDir doesn't exist/i.test(err.message));
+      done();
+    });
+  });
+
+  it('should throw when testDir is not a directory', function (done) {
+    banoffee({
+      baseDir: __dirname,
+      testDir: __filename,
+    }).on('error', function (err) {
+      assert.ok(err instanceof Error);
+      assert.ok(/testDir is not a directory/i.test(err.message));
+      done();
+    });
+  });
+
+  it('should throw when no tests found', function (done) {
+    var repodir = path.resolve(__dirname, '../');
+    banoffee({
+      baseDir: repodir,
+      testDir: path.join(repodir, 'bin')
+    }).on('error', function (err) {
+      assert.ok(err instanceof Error);
+      assert.ok(/no test files loaded/i.test(err.message));
+      done();
+    });
+  });
+
+  it('should throw when no test files match file pattern', function (done) {
+    banoffee({
+      baseDir: __dirname,
+      testDir: 'fixtures'
+    }).on('error', function (err) {
+      assert.ok(err instanceof Error);
+      assert.ok(/no test files loaded/i.test(err.message));
+      done();
+    });
+  });
+
+  it.only('should ...', function (done) {
+    banoffee({
+      baseDir: __dirname,
+      testDir: 'fixtures',
+      testFilePattern: 'test-*.js'
+    }).on('log', function (str) {
+      console.log('LOG:', str);
+    }).on('end', function () {
+      console.log('banoffee ended!');
+      done();
+    });
+  });
+
+});

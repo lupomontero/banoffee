@@ -21,8 +21,16 @@ test your app on real browsers.
 
 ## Installation
 
+Locally as dev dependency:
+
 ```sh
-npm install banoffee --save-dev
+npm install --save-dev banoffee
+```
+
+Globally:
+
+```sh
+npm install -g banoffee
 ```
 
 * * *
@@ -115,7 +123,7 @@ directory of your project and that your `banoffee.conf.js` is in the current
 directory, you can simply run:
 
 ```sh
-./node_modules/banoffee/bin/banoffee
+./node_modules/.bin/banoffee
 ```
 
 Without any arguments, `banoffee` looks for a `banoffee.conf.js` file in the
@@ -126,21 +134,25 @@ have separate configs for develepment and continuous integration for example,
 you could have two config files and run:
 
 ```sh
-./node_modules/banoffee/bin/banoffee banoffee.dev.js
+./node_modules/.bin/banoffee banoffee.dev.js
 ```
 
 and
 
 ```sh
-./node_modules/banoffee/bin/banoffee banoffee.continuous.js
+./node_modules/.bin/banoffee banoffee.continuous.js
 ```
 
 ### Node.js module
 
 ```javascript
 var banoffee = require('banoffee');
-var runner = banoffee();
-runner.run();
+banoffee({
+  testDir: 'test',
+  logDir: 'test/log'
+}, function (err, failures) {
+  // ...
+});
 ```
 
 * * *
@@ -149,4 +161,3 @@ runner.run();
 
 * [Chromedriver doesn’t run in tmux and here’s how to fix it](http://borkweb.com/story/chromedriver-doesnt-run-in-tmux)
 * [Running Karma and Chrome under tmux on OSX](http://savanne.be/804-running-karma-and-chrome-under-tmux-on-osx/)
-
