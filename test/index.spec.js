@@ -11,27 +11,8 @@ describe.only('banoffee', function () {
     done();
   });
 
-  it('should throw when baseDir doesnt exist', function (done) {
-    banoffee({ baseDir: '/foo-bar-baz' }).on('error', function (err) {
-      assert.ok(err instanceof Error);
-      assert.ok(/baseDir doesn't exist/i.test(err.message));
-      done();
-    });
-  });
-
-  it('should throw when baseDir is not a directory', function (done) {
-    banoffee({ baseDir: __filename }).on('error', function (err) {
-      assert.ok(err instanceof Error);
-      assert.ok(/baseDir is not a directory/i.test(err.message));
-      done();
-    });
-  });
-
   it('should throw when testDir doesnt exist', function (done) {
-    banoffee({
-      baseDir: __dirname,
-      testDir: 'fooo',
-    }).on('error', function (err) {
+    banoffee({ testDir: '/foo-bar-baz' }).on('error', function (err) {
       assert.ok(err instanceof Error);
       assert.ok(/testDir doesn't exist/i.test(err.message));
       done();
@@ -39,10 +20,7 @@ describe.only('banoffee', function () {
   });
 
   it('should throw when testDir is not a directory', function (done) {
-    banoffee({
-      baseDir: __dirname,
-      testDir: __filename,
-    }).on('error', function (err) {
+    banoffee({ testDir: __filename }).on('error', function (err) {
       assert.ok(err instanceof Error);
       assert.ok(/testDir is not a directory/i.test(err.message));
       done();
@@ -50,10 +28,8 @@ describe.only('banoffee', function () {
   });
 
   it('should throw when no tests found', function (done) {
-    var repodir = path.resolve(__dirname, '../');
     banoffee({
-      baseDir: repodir,
-      testDir: path.join(repodir, 'bin')
+      testDir: path.join(__dirname, '../bin')
     }).on('error', function (err) {
       assert.ok(err instanceof Error);
       assert.ok(/no test files loaded/i.test(err.message));
@@ -63,8 +39,7 @@ describe.only('banoffee', function () {
 
   it('should throw when no test files match file pattern', function (done) {
     banoffee({
-      baseDir: __dirname,
-      testDir: 'fixtures'
+      testDir: path.join(__dirname, 'fixtures')
     }).on('error', function (err) {
       assert.ok(err instanceof Error);
       assert.ok(/no test files loaded/i.test(err.message));
@@ -74,8 +49,7 @@ describe.only('banoffee', function () {
 
   it('should ...', function (done) {
     banoffee({
-      baseDir: __dirname,
-      testDir: 'fixtures',
+      testDir: path.join(__dirname, 'fixtures'),
       testFilePattern: 'test-*.js',
       platforms: [ { browserName: 'phantomjs' } ]
     }).on('log', function (str) {

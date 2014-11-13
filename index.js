@@ -18,7 +18,6 @@ var SauceServer = require('./lib/sauce');
 // Default options
 //
 var defaults = {
-  baseDir: '',
   testDir: 'test',
   testFilePattern: '*.spec.js',
   remote: {
@@ -40,56 +39,45 @@ module.exports = function (options) {
   var opt = _.extend({}, defaults, options);
 
   var ee = new EventEmitter();
-  var tests, server;
+  var files, server;
   var failures = 0;
 
   opt.depsDir = path.resolve(__dirname, 'deps');
-  opt.testDir = path.resolve(opt.baseDir, opt.testDir);
+  opt.testDir = path.resolve(process.cwd(), opt.testDir);
   opt.logDir = path.resolve(opt.testDir, 'log');
 
   function ensureDirs(cb) {
-    async.eachSeries([
-      { name: 'baseDir', src: opt.baseDir },
-      { name: 'testDir', src: opt.testDir }
-    ], function (dir, cb) {
-      fs.exists(dir.src, function (exists) {
-        if (!exists) {
-          return cb(new Error(dir.name + ' doesn\'t exist (' + dir.src + ').'));
+    fs.exists(opt.testDir, function (exists) {
+      if (!exists) {
+        return cb(new Error('testDir doesn\'t exist (' + opt.testDir + ').'));
+      }
+      fs.stat(opt.testDir, function (err, stats) {
+        if (err) {
+          return cb(err);
+        } else if (!stats.isDirectory()) {
+          return cb(new Error('testDir is not a directory (' + opt.testDir + ')'));
         }
-        fs.stat(dir.src, function (err, stats) {
-          if (err) {
-            return cb(err);
-          } else if (!stats.isDirectory()) {
-            return cb(new Error(dir.name + ' is not a directory (' + dir.src + ')'));
-          }
-          ee.emit('log', dir.name + ': ' + dir.src);
-          cb();
-        });
+        ee.emit('log', 'testDir: ' + opt.testDir);
+        ee.emit('log', 'logDir: ' + opt.logDir);
+        mkdirp(opt.logDir, cb);
       });
-    }, function (err) {
-      if (err) { return cb(err); }
-      mkdirp(opt.logDir, cb);
     });
   }
 
   // Read test directory and load all test files.
   function loadTests(cb) {
-    if (!fs.existsSync(opt))
-    if (!fs.existsSync(opt.testDir)) {
-      return cb(new Error('Test directory doesn\'t exist'));
-    }
     readdirp({ root: opt.testDir, fileFilter: opt.testFilePattern })
       .on('warn', function (err) { ee.emit('warn', err); })
       .on('error', function (err) {
         cb(err);
       })
-      .pipe(es.writeArray(function (err, files) {
+      .pipe(es.writeArray(function (err, array) {
         if (err) { return cb(err); }
-        tests = _.pluck(files, 'fullPath');
-        if (!tests.length) {
+        files = _.pluck(array, 'fullPath');
+        if (!files.length) {
           return cb(new Error('No test files loaded'));
         }
-        ee.emit('log', 'Loaded tests: ' + tests.join(', '));
+        ee.emit('log', 'Loaded files: ' + files.join(', '));
         cb();
       }));
   }
@@ -123,7 +111,7 @@ module.exports = function (options) {
         type: 'init',
         remote: opt.remote,
         platform: platform,
-        tests: tests
+        files: files
       });
     }, cb);
   }
