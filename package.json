@@ -1,6 +1,6 @@
 {
   "name": "banoffee",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "E2E testing for your node.js web app, using Selenium, ChromeDriver, Mocha, SauceLabs, ...",
   "keywords": [
     "e2e",
