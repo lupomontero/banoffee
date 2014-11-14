@@ -10,8 +10,7 @@ var _ = require('lodash');
 var mkdirp = require('mkdirp');
 var readdirp = require('readdirp');
 var es = require('event-stream');
-var SeleniumServer = require('./lib/selenium');
-var SauceServer = require('./lib/sauce');
+var createServer = require('./lib/server');
 
 
 //
@@ -38,13 +37,14 @@ module.exports = function (options) {
   // Apply defaults to passed options.
   var opt = _.extend({}, defaults, options);
 
-  var ee = new EventEmitter();
-  var files, server;
-  var failures = 0;
-
   opt.vendorDir = path.resolve(__dirname, 'vendor');
   opt.testDir = path.resolve(process.cwd(), opt.testDir);
   opt.logDir = path.resolve(opt.testDir, 'log');
+
+  var ee = new EventEmitter();
+  var server = createServer(opt);
+  var files = [];
+  var failures = 0;
 
   function ensureDirs(cb) {
     fs.exists(opt.testDir, function (exists) {
@@ -82,19 +82,6 @@ module.exports = function (options) {
       }));
   }
 
-  function startSelenium(cb) {
-    var isSauce = /saucelabs\.com$/.test(opt.remote.hostname);
-    server = isSauce ? new SauceServer(opt) : new SeleniumServer(opt);
-    server.start(cb);
-  }
-
-  function stopSelenium(cb) {
-    server.stop(function (code, signal) {
-      //console.log(code, signal);
-      cb();
-    });
-  }
-
   // Run tests on each platform.
   function runTests(cb) {
     async.eachSeries(opt.platforms, function (platform, cb) {
@@ -116,9 +103,9 @@ module.exports = function (options) {
   async.series([
     ensureDirs,
     loadTests,
-    startSelenium,
+    server.start.bind(server),
     runTests,
-    stopSelenium
+    server.stop.bind(server)
   ], function (err) {
     if (err) { 
       return ee.emit('error', err);
